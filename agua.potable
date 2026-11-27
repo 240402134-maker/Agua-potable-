@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gotas de Vida | Proyecto Escolar</title>
+
+<style>
+:root {
+  --rosa: #e85d9e;
+  --rosa-oscuro: #bf367a;
+  --rosa-claro: #fff0f7;
+  --blanco: #ffffff;
+  --texto: #56394b;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #fff5fa;
+  color: var(--texto);
+}
+
+header {
+  background: linear-gradient(135deg, #f7a8d0, #df5c9e);
+  color: white;
+  text-align: center;
+  padding: 35px 15px;
+}
+
+header .gota { font-size: 48px; }
+header h1 { margin: 8px 0; font-size: 32px; }
+header p { margin: 0; }
+
+nav {
+  background: white;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  box-shadow: 0 3px 12px #a8427312;
+}
+
+button {
+  border: none;
+  background: var(--rosa);
+  color: white;
+  padding: 12px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+button:hover { background: var(--rosa-oscuro); }
+
+nav button {
+  background: var(--rosa-claro);
+  color: var(--rosa-oscuro);
+}
+
+main {
+  max-width: 950px;
+  margin: 25px auto;
+  padding: 0 15px;
+}
+
+.card {
+  background: white;
+  border: 1px solid #f7d5e6;
+  border-radius: 18px;
+  padding: 24px;
+  margin-bottom: 22px;
+  box-shadow: 0 5px 18px #9b416d0c;
+  scroll-margin-top: 95px;
+}
+
+h2 { color: var(--rosa-oscuro); margin-top: 0; }
+h3 { color: #cf4b8c; }
+
+p, li { line-height: 1.7; }
+
+input, textarea, select {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #edb9d3;
+  border-radius: 10px;
+  margin: 9px 0 15px;
+  font: inherit;
+  color: var(--texto);
+  background: #fffafd;
+}
+
+textarea { min-height: 110px; resize: vertical; }
+
+input:focus, textarea:focus {
+  outline: 2px solid #ef9bc3;
+}
+
+label { font-weight: bold; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 14px;
+}
+
+.mini, .equipo {
+  background: var(--rosa-claro);
+  padding: 17px;
+  border: 1px solid #f4cade;
+  border-radius: 13px;
+  overflow-wrap: anywhere;
+}
+
+.equipo { background: #fff7fb; }
+.equipo li { margin-bottom: 5px; }
+
+.aviso {
+  background: #fff4d9;
+  padding: 13px;
+  border-radius: 10px;
+}
+
+.mensaje {
+  background: #fce3ef;
+  padding: 13px;
+  border-radius: 10px;
+  margin-top: 12px;
+}
+
+.pregunta-guardada {
+  border-left: 4px solid var(--rosa);
+  background: #fff7fb;
+  padding: 14px;
+  margin: 12px 0;
+  border-radius: 8px;
+  overflow-wrap: anywhere;
+}
+
+.pequeno { color: #866477; }\n#personasRegistradas .mini { overflow-wrap: anywhere; }
+footer { text-align: center; padding: 25px; color: #866477; }
+.oculto { display: none; }
+
+@media(max-width: 500px) {
+  header h1 { font-size: 26px; }
+  .card { padding: 18px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="gota">💧🌸</div>
+  <h1>Gotas de Vida</h1>
+  <p>Proyecto escolar: Captación y cuidado del agua</p>
+</header>
+
+<nav>
+  <button onclick="irA('inicio')">Inicio</button>
+  <button onclick="irA('registro')">Mi equipo</button>
+  <button onclick="irA('informacion')">Información</button>
+  <button onclick="irA('preguntas')">Preguntas</button>
+  <button onclick="irA('proyecto')">Mi proyecto</button>
+</nav>
+
+<main>
+
+<section class="card" id="inicio">
+  <h2>🌷 ¡Bienvenido a Gotas de Vida!</h2>
+  <p>
+    Aprende sobre la captación de agua de lluvia, registra tu nombre,
+    conoce a tus compañeros de equipo y comparte preguntas e ideas
+    para desarrollar tu proyecto escolar.
+  </p>
+
+  <div class="grid">
+    <div class="mini">
+      <h3>👥 Equipos</h3>
+      <p>Conoce tu equipo de trabajo de hasta cinco integrantes.</p>
+    </div>
+    <div class="mini">
+      <h3>💧 Aprende</h3>
+      <p>Descubre cómo recoger y aprovechar el agua de lluvia.</p>
+    </div>
+    <div class="mini">
+      <h3>❓ Pregunta</h3>
+      <p>Escribe tus dudas e ideas sobre el proyecto.</p>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="registro">
+  <h2>👤 Registro e inicio de sesión</h2>
+  <p>Crea tu cuenta con tu nombre, correo electrónico y contraseña. Después podrás iniciar sesión para consultar tu equipo.</p>
+
+  <div class="grid">
+    <div class="mini">
+      <h3>🌸 Crear cuenta</h3>
+      <form id="formRegistro">
+        <label for="nombre">Nombre completo</label>
+        <input id="nombre" maxlength="100" placeholder="Escribe tu nombre completo" required>
+        <label for="correo">Correo electrónico</label>
+        <input id="correo" type="email" maxlength="150" placeholder="ejemplo@correo.com" required>
+        <label for="contrasena">Contraseña</label>
+        <input id="contrasena" type="password" minlength="6" maxlength="100" placeholder="Mínimo 6 caracteres" required>
+        <button type="submit">Crear cuenta</button>
+      </form>
+    </div>
+    <div class="mini">
+      <h3>🔐 Ya tengo cuenta</h3>
+      <form id="formLogin">
+        <label for="correoLogin">Correo electrónico</label>
+        <input id="correoLogin" type="email" placeholder="Tu correo registrado" required>
+        <label for="contrasenaLogin">Contraseña</label>
+        <input id="contrasenaLogin" type="password" placeholder="Tu contraseña" required>
+        <button type="submit">Iniciar sesión</button>
+      </form>
+      <div id="estadoSesion" aria-live="polite"></div>
+      <button type="button" id="btnCerrarSesion" class="oculto">Cerrar sesión</button>
+    </div>
+  </div>
+  <div id="mensajeRegistro" aria-live="polite"></div>
+
+  <h3>🌷 Personas registradas</h3>
+  <p id="contador">Participantes: 0</p>
+  <div id="personasRegistradas" class="grid"></div>
+
+  <h3>🌸 Mi equipo</h3>
+  <div id="miEquipo">Inicia sesión para conocer a tus compañeros.</div>
+
+  <h3>👥 Todos los equipos</h3>
+  <div id="todosEquipos" class="grid"></div>
+  <p class="aviso">Aviso: esta versión de demostración guarda las cuentas solo en este navegador. No uses una contraseña que utilices en otras páginas. Para cuentas seguras y compartir registros entre dispositivos, hace falta una base de datos y un servidor.</p>
+</section>
+
+<section class="card" id="informacion">
+  <h2>💧 ¿Qué es la captación de agua?</h2>
+
+  <p>
+    La captación de agua de lluvia consiste en recolectar la lluvia
+    que cae sobre superficies adecuadas, como los techos, y conducirla
+    mediante canaletas y tuberías hacia un depósito para almacenarla.
+  </p>
+
+  <h3>¿Para qué sirve?</h3>
+  <ul>
+    <li>Para aprovechar el agua de lluvia.</li>
+    <li>Para regar plantas y jardines si el agua es adecuada.</li>
+    <li>Para realizar ciertas tareas de limpieza.</li>
+    <li>Para fomentar el ahorro y el cuidado del agua.</li>
+  </ul>
+
+  <h3>Materiales para un modelo escolar</h3>
+  <ul>
+    <li>Una botella o recipiente limpio para representar el tanque.</li>
+    <li>Cartón para construir una maqueta de techo.</li>
+    <li>Una canaleta pequeña o tubo.</li>
+    <li>Una bandeja para recoger el agua.</li>
+    <li>Cinta adhesiva y materiales para fijar la maqueta.</li>
+  </ul>
+
+  <h3>Ejemplo de descripción</h3>
+  <div class="mini">
+    Nuestro proyecto consiste en diseñar un sistema de captación
+    de agua de lluvia para demostrar cómo podemos aprovechar este
+    recurso natural. El agua se recoge en una superficie inclinada,
+    pasa por un conducto y llega a un recipiente de almacenamiento.
+    Con esta actividad buscamos fomentar el cuidado del agua en
+    nuestra escuela y comunidad.
+  </div>
+
+  <h3>Pasos generales</h3>
+  <ol>
+    <li>Diseñar una maqueta de una superficie inclinada.</li>
+    <li>Colocar un conducto que dirija el agua hacia un recipiente.</li>
+    <li>Verter un poco de agua para simular la lluvia.</li>
+    <li>Observar el recorrido y registrar los resultados.</li>
+    <li>Explicar cómo podría aplicarse el sistema en la escuela.</li>
+  </ol>
+
+  <p class="aviso">
+    Importante: el agua de lluvia recolectada no es necesariamente
+    potable. No debe beberse sin tratamiento adecuado y comprobación
+    de su calidad.
+  </p>
+</section>
+
+<section class="card" id="preguntas">
+  <h2>❓ Área de preguntas sobre el proyecto</h2>
+  <p>
+    ¿Tienes alguna duda sobre la captación de agua? Escribe tu pregunta
+    aquí. Puedes consultar las preguntas guardadas y preparar tus
+    investigaciones para la clase.
+  </p>
+
+  <form id="formPregunta">
+    <label for="autor">Tu nombre (opcional)</label>
+    <input id="autor" maxlength="100" placeholder="¿Quién hace la pregunta?">
+
+    <label for="textoPregunta">Escribe tu pregunta</label>
+    <textarea id="textoPregunta" maxlength="1000"
+      placeholder="Ej. ¿Cómo podemos recolectar agua de lluvia en la escuela?"
+      required></textarea>
+
+    <button type="submit">Publicar pregunta</button>
+  </form>
+
+  <div id="mensajePregunta" aria-live="polite"></div>
+
+  <h3>💬 Preguntas de los participantes</h3>
+  <div id="listaPreguntas">
+    <p class="pequeno">Todavía no se han publicado preguntas.</p>
+  </div>
+
+  <button type="button" class="boton-claro"
+    onclick="borrarPreguntas()">Borrar todas las preguntas</button>
+
+  <p class="aviso">
+    Esta versión muestra las preguntas guardadas en el navegador actual.
+    No las comparte automáticamente con otras computadoras o celulares.
+  </p>
+</section>
+
+<section class="card" id="proyecto">
+  <h2>📝 Crea la descripción de tu proyecto</h2>
+  <p>
+    Completa los apartados para organizar tu trabajo escolar.
+    Puedes guardar tus avances o descargar el documento.
+  </p>
+
+  <form id="formProyecto">
+    <label for="titulo">Título del proyecto</label>
+    <input id="titulo" required
+      placeholder="Ej. Captación de agua de lluvia en mi escuela">
+
+    <label for="objetivo">Objetivo</label>
+    <textarea id="objetivo" required
+      placeholder="¿Qué deseas lograr con el proyecto?"></textarea>
+
+    <label for="descripcion">Descripción</label>
+    <textarea id="descripcion" required
+      placeholder="Explica en qué consiste tu propuesta."></textarea>
+
+    <label for="materiales">Materiales</label>
+    <textarea id="materiales"
+      placeholder="Escribe los materiales necesarios."></textarea>
+
+    <label for="procedimiento">Procedimiento</label>
+    <textarea id="procedimiento"
+      placeholder="Explica los pasos de tu proyecto."></textarea>
+
+    <label for="conclusion">Conclusión</label>
+    <textarea id="conclusion"
+      placeholder="¿Qué aprendiste sobre el cuidado del agua?"></textarea>
+
+    <button type="submit">Guardar mi proyecto</button>
+    <button type="button" class="boton-claro"
+      onclick="descargarProyecto()">Descargar proyecto</button>
+  </form>
+
+  <div id="mensajeProyecto" aria-live="polite"></div>
+</section>
+
+</main>
+
+<footer>
+  Gotas de Vida 🌸 Cada gota cuenta.
+</footer>
+
+<script>
+const CLAVE_DATOS = "gotasRosaDatosV1";
+const CLAVE_PREGUNTAS = "gotasRosaPreguntasV1";
+const CLAVE_PROYECTO = "gotasRosaProyectoV1";
+
+let participantes = [];
+let equipos = [];
+let preguntas = [];
+
+function irA(id) {
+  document.getElementById(id).scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+}
+
+function guardarDatos() {
+  try {
+    localStorage.setItem(CLAVE_DATOS,
+      JSON.stringify({ participantes, equipos }));
+  } catch (e) {
+    document.getElementById("mensajeRegistro").textContent =
+      "No se pudieron guardar los datos en este navegador.";
+  }
+}
+
+function cargar() {
+  try {
+    const d = JSON.parse(localStorage.getItem(CLAVE_DATOS));
+    if (d && Array.isArray(d.participantes)
+        && Array.isArray(d.equipos)) {
+      participantes = d.participantes.filter(p => p && p.id && p.nombre);
+      equipos = [];
+      sortearEquipos();
+    }
+
+    const p = JSON.parse(localStorage.getItem(CLAVE_PREGUNTAS));
+    if (Array.isArray(p)) preguntas = p;
+  } catch (e) {
+    participantes = [];
+    equipos = [];
+    preguntas = [];
+  }
+}
+
+function sortearEquipos() {
+  // Los equipos se forman por orden de registro y no cambian cada vez que alguien entra.
+  equipos = [];
+  for (let i = 0; i < participantes.length; i += 5) {
+    equipos.push(participantes.slice(i, i + 5));
+  }
+}
+
+function mostrarEquipos(idPersona = null) {
+  const todos = document.getElementById("todosEquipos");
+  const miEquipo = document.getElementById("miEquipo");
+  const registrados = document.getElementById("personasRegistradas");
+  todos.replaceChildren();
+  miEquipo.replaceChildren();
+  registrados.replaceChildren();
+
+  document.getElementById("contador").textContent =
+    "Personas registradas: " + participantes.length;
+
+  participantes.forEach((persona, i) => {
+    const tarjeta = document.createElement("div");
+    tarjeta.className = "mini";
+    const nombre = document.createElement("strong");
+    nombre.textContent = persona.nombre;
+    const correo = document.createElement("p");
+    correo.textContent = persona.correo || "Correo no disponible";
+    const equipoNumero = Math.floor(i / 5) + 1;
+    const equipo = document.createElement("p");
+    equipo.textContent = "Equipo " + equipoNumero;
+    tarjeta.append(nombre, correo, equipo);
+    registrados.appendChild(tarjeta);
+  });
+
+  equipos.forEach((equipo, i) => {
+    const tarjeta = document.createElement("div");
+    tarjeta.className = "equipo";
+    const titulo = document.createElement("h3");
+    titulo.textContent = "🌸 Equipo " + (i + 1);
+    const lista = document.createElement("ul");
+    equipo.forEach(persona => {
+      const li = document.createElement("li");
+      li.textContent = persona.nombre;
+      lista.appendChild(li);
+    });
+    tarjeta.append(titulo, lista);
+    todos.appendChild(tarjeta);
+
+    if (idPersona && equipo.some(p => p.id === idPersona)) {
+      miEquipo.appendChild(tarjeta.cloneNode(true));
+    }
+  });
+
+  if (!idPersona) {
+    miEquipo.textContent = "Inicia sesión para conocer a tus compañeros.";
+  }
+}
+
+function mostrarSesion() {
+  const persona = participantes.find(p => p.id === usuarioActualId);
+  const estado = document.getElementById("estadoSesion");
+  const cerrar = document.getElementById("btnCerrarSesion");
+  if (persona) {
+    estado.className = "mensaje";
+    estado.textContent = "Sesión iniciada como " + persona.nombre + ".";
+    cerrar.classList.remove("oculto");
+    mostrarEquipos(persona.id);
+    document.getElementById("autor").value = persona.nombre;
+  } else {
+    estado.className = "";
+    estado.textContent = "No has iniciado sesión.";
+    cerrar.classList.add("oculto");
+    mostrarEquipos();
+  }
+}
+
+let usuarioActualId = localStorage.getItem("gotasRosaUsuarioActual") || null;
+
+document.getElementById("formRegistro").addEventListener("submit", e => {
+  e.preventDefault();
+  const nombre = document.getElementById("nombre").value.trim();
+  const correo = document.getElementById("correo").value.trim().toLowerCase();
+  const contrasena = document.getElementById("contrasena").value;
+  const mensaje = document.getElementById("mensajeRegistro");
+
+  if (!nombre || !correo || contrasena.length < 6) {
+    mensaje.className = "mensaje";
+    mensaje.textContent = "Completa todos los campos. La contraseña debe tener al menos 6 caracteres.";
+    return;
+  }
+  if (participantes.some(p => (p.correo || "").toLowerCase() === correo)) {
+    mensaje.className = "mensaje";
+    mensaje.textContent = "Ese correo ya tiene una cuenta registrada. Inicia sesión.";
+    return;
+  }
+
+  const persona = {
+    id: Date.now().toString() + Math.random().toString(36).slice(2),
+    nombre, correo, contrasena
+  };
+  participantes.push(persona);
+  sortearEquipos();
+  guardarDatos();
+  usuarioActualId = persona.id;
+  localStorage.setItem("gotasRosaUsuarioActual", usuarioActualId);
+  mostrarEquipos(persona.id);
+  mostrarSesion();
+
+  mensaje.className = "mensaje";
+  mensaje.textContent = "¡Cuenta creada correctamente, " + nombre + "! Ya puedes ver tu equipo.";
+  e.target.reset();
+});
+
+document.getElementById("formLogin").addEventListener("submit", e => {
+  e.preventDefault();
+  const correo = document.getElementById("correoLogin").value.trim().toLowerCase();
+  const contrasena = document.getElementById("contrasenaLogin").value;
+  const persona = participantes.find(p =>
+    (p.correo || "").toLowerCase() === correo && p.contrasena === contrasena
+  );
+  const estado = document.getElementById("estadoSesion");
+  if (!persona) {
+    estado.className = "mensaje";
+    estado.textContent = "Correo o contraseña incorrectos. Revisa tus datos o crea una cuenta.";
+    return;
+  }
+  usuarioActualId = persona.id;
+  localStorage.setItem("gotasRosaUsuarioActual", usuarioActualId);
+  mostrarSesion();
+  e.target.reset();
+});
+
+document.getElementById("btnCerrarSesion").addEventListener("click", () => {
+  usuarioActualId = null;
+  localStorage.removeItem("gotasRosaUsuarioActual");
+  mostrarSesion();
+});
+
+function guardarPreguntas() {
+  try {
+    localStorage.setItem(CLAVE_PREGUNTAS, JSON.stringify(preguntas));
+  } catch (e) {
+    document.getElementById("mensajePregunta").textContent =
+      "No se pudieron guardar las preguntas.";
+  }
+}
+
+function mostrarPreguntas() {
+  const lista = document.getElementById("listaPreguntas");
+  lista.replaceChildren();
+
+  if (preguntas.length === 0) {
+    const p = document.createElement("p");
+    p.className = "pequeno";
+    p.textContent = "Todavía no se han publicado preguntas.";
+    lista.appendChild(p);
+    return;
+  }
+
+  preguntas.forEach(pregunta => {
+    const tarjeta = document.createElement("div");
+    tarjeta.className = "pregunta-guardada";
+
+    const autor = document.createElement("strong");
+    autor.textContent = pregunta.autor || "Participante";
+
+    const texto = document.createElement("p");
+    texto.textContent = pregunta.texto;
+
+    const fecha = document.createElement("small");
+    fecha.textContent = pregunta.fecha;
+
+    tarjeta.append(autor, texto, fecha);
+    lista.appendChild(tarjeta);
+  });
+}
+
+document.getElementById("formPregunta").addEventListener("submit", e => {
+  e.preventDefault();
+
+  const autor = document.getElementById("autor").value.trim();
+  const texto = document.getElementById("textoPregunta").value.trim();
+
+  if (!texto) return;
+
+  preguntas.unshift({
+    autor,
+    texto,
+    fecha: new Date().toLocaleString("es-MX")
+  });
+
+  guardarPreguntas();
+  mostrarPreguntas();
+
+  document.getElementById("mensajePregunta").textContent =
+    "¡Tu pregunta se publicó correctamente!";
+
+  document.getElementById("textoPregunta").value = "";
+});
+
+function borrarPreguntas() {
+  if (!confirm("¿Deseas borrar todas las preguntas de este navegador?")) {
+    return;
+  }
+  preguntas = [];
+  guardarPreguntas();
+  mostrarPreguntas();
+  document.getElementById("mensajePregunta").textContent =
+    "Se borraron las preguntas guardadas.";
+}
+
+const idsProyecto = [
+  "titulo", "objetivo", "descripcion",
+  "materiales", "procedimiento", "conclusion"
+];
+
+function obtenerProyecto() {
+  const datos = {};
+  idsProyecto.forEach(id => {
+    datos[id] = document.getElementById(id).value.trim();
+  });
+  return datos;
+}
+
+function cargarProyecto() {
+  try {
+    const datos = JSON.parse(localStorage.getItem(CLAVE_PROYECTO));
+    if (datos) {
+      idsProyecto.forEach(id => {
+        document.getElementById(id).value = datos[id] || "";
+      });
+    }
+  } catch (e) {}
+}
+
+document.getElementById("formProyecto").addEventListener("submit", e => {
+  e.preventDefault();
+  try {
+    localStorage.setItem(CLAVE_PROYECTO,
+      JSON.stringify(obtenerProyecto()));
+    document.getElementById("mensajeProyecto").textContent =
+      "¡Proyecto guardado correctamente!";
+  } catch (error) {
+    document.getElementById("mensajeProyecto").textContent =
+      "No se pudo guardar. Intenta descargarlo.";
+  }
+});
+
+function descargarProyecto() {
+  const d = obtenerProyecto();
+
+  const contenido =
+    "GOTAS DE VIDA - PROYECTO ESCOLAR\n\n" +
+    "Título:\n" + d.titulo + "\n\n" +
+    "Objetivo:\n" + d.objetivo + "\n\n" +
+    "Descripción:\n" + d.descripcion + "\n\n" +
+    "Materiales:\n" + d.materiales + "\n\n" +
+    "Procedimiento:\n" + d.procedimiento + "\n\n" +
+    "Conclusión:\n" + d.conclusion;
+
+  const archivo = new Blob(["\ufeff", contenido], {
+    type: "text/plain;charset=utf-8"
+  });
+
+  const url = URL.createObjectURL(archivo);
+  const enlace = document.createElement("a");
+  enlace.href = url;
+  enlace.download = "Proyecto_Gotas_de_Vida.txt";
+  enlace.click();
+  URL.revokeObjectURL(url);
+}
+
+cargar();
+sortearEquipos();
+mostrarEquipos();
+mostrarSesion();
+mostrarPreguntas();
+cargarProyecto();
+</script>
+
+</body>
+</html>
